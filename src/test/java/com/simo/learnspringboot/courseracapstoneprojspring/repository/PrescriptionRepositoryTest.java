@@ -54,19 +54,15 @@ public class PrescriptionRepositoryTest {
         doctorRepository.deleteAll();
 
         // Setup test data
-        patient = new Patient();
-        patient.setFirstName("John");
-        patient.setLastName("Doe");
+        patient = new Patient("johndoe", "password123", "John", "Doe");
         patient.setDateOfBirth(LocalDate.of(2006, 1, 15));
-        patient = patientRepository.save(patient); // Save and re-assign to get the generated ID
+        // ADD THESE TWO LINES
+        patient = patientRepository.save(patient);
 
-        doctor = new Doctor();
-        doctor.setFirstName("Jane");
-        doctor.setLastName("Smith");
-        doctor.setSpecialization("Cardiology");
-        doctor = doctorRepository.save(doctor); // Save and re-assign
+        doctor = new Doctor("janesmith", "password1234", "Jane", "Cardiology");
+        // ADD THESE TWO LINES
+        doctor = doctorRepository.save(doctor);
     }
-
     @Test
     void findByPatientId_shouldReturnPrescriptions() {
         // Arrange: Create medication and prescription

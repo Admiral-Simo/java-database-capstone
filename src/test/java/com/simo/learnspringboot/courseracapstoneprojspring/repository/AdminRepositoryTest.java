@@ -18,10 +18,7 @@ public class AdminRepositoryTest {
         String username = "simo";
         String fullName = "mohamed khalis";
         String password = "somepassword";
-        Admin admin = new Admin();
-        admin.setUsername(username);
-        admin.setFullName(fullName);
-        admin.setPassword(password);
+        Admin admin = new Admin(username, password, fullName);
 
         Admin result = adminRepository.save(admin);
 
