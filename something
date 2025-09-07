@@ -1,4 +1,0 @@
-CREATE TRIGGER trigger_fix_gps_rollover
-BEFORE INSERT ON tc_positions
-FOR EACH ROW
-EXECUTE FUNCTION correct_gps_week_rollover();
