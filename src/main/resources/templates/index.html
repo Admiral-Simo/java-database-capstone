@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+<div class="text-center bg-white p-12 rounded-lg shadow-xl">
+    <h1 class="text-4xl font-bold mb-6">Medical Appointment System</h1>
+    <div class="space-x-4">
+        <a th:href="@{/admin/dashboard}"
+           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Admin Login
+        </a>
+        <!-- This link is now dynamic and will only be shown if a doctor exists -->
+        <a th:if="${demoDoctorId != null}"
+           th:href="@{/doctor/dashboard(id=${demoDoctorId})}"
+           class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+            Doctor Login (Demo)
+        </a>
+        <!-- Show a disabled button if no doctors are in the database -->
+        <a th:if="${demoDoctorId == null}"
+           class="bg-gray-400 text-white font-bold py-2 px-4 rounded cursor-not-allowed">
+            No Doctors Available
+        </a>
+    </div>
+</div>
+</body>
+</html>
+

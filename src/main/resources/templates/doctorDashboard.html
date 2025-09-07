@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+<div class="container mx-auto p-8">
+    <div class="flex justify-between items-center mb-8">
+        <div>
+            <h1 class="text-4xl font-bold text-gray-800" th:text="'Dr. ' + ${doctor.firstName} + ' ' + ${doctor.lastName}">Dr. John Doe</h1>
+            <p class="text-lg text-gray-600" th:text="${doctor.specialization}">Cardiology</p>
+        </div>
+        <a th:href="@{/}" class="text-blue-500 hover:underline">Logout</a>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold text-gray-700">Upcoming Appointments</h2>
+            <p class="text-3xl font-bold text-purple-600" th:text="${upcomingCount}">0</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold text-gray-700">Completed Appointments</h2>
+            <p class="text-3xl font-bold text-green-600" th:text="${completedCount}">0</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold text-gray-700">Total Patients</h2>
+            <p class="text-3xl font-bold text-blue-600" th:text="${uniquePatientCount}">0</p>
+        </div>
+    </div>
+
+
+    <!-- Appointments Table -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Your Appointments</h2>
+        <table class="min-w-full bg-white">
+            <thead class="bg-gray-200">
+            <tr>
+                <th class="py-2 px-4 text-left">Patient Name</th>
+                <th class="py-2 px-4 text-left">Date & Time</th>
+                <th class="py-2 px-4 text-left">Reason</th>
+                <th class="py-2 px-4 text-left">Status / Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="appt : ${appointments}" class="border-b">
+                <td class="py-2 px-4" th:text="${appt.patient.firstName} + ' ' + ${appt.patient.lastName}">Jane Smith</td>
+                <td class="py-2 px-4" th:text="${#temporals.format(appt.appointmentDateTime, 'dd-MM-yyyy HH:mm')}">01-01-2025 10:00</td>
+                <td class="py-2 px-4" th:text="${appt.reason}">Checkup</td>
+                <td class="py-2 px-4">
+                    <!-- Display static text for non-scheduled appointments -->
+                    <span th:if="${appt.status.name() != 'SCHEDULED'}"
+                          th:text="${appt.status}"
+                          th:classappend="${appt.status.name() == 'COMPLETED'} ? 'text-green-500 font-semibold' : 'text-red-500 font-semibold'">
+                     </span>
+
+                    <!-- Display action buttons only for scheduled appointments -->
+                    <div th:if="${appt.status.name() == 'SCHEDULED'}" class="flex space-x-2">
+                        <form th:action="@{/doctor/appointments/update}" method="post">
+                            <input type="hidden" name="appointmentId" th:value="${appt.id}" />
+                            <input type="hidden" name="doctorId" th:value="${doctor.id}" />
+                            <input type="hidden" name="status" value="COMPLETED" />
+                            <button type="submit" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Complete</button>
+                        </form>
+                        <form th:action="@{/doctor/appointments/update}" method="post">
+                            <input type="hidden" name="appointmentId" th:value="${appt.id}" />
+                            <input type="hidden" name="doctorId" th:value="${doctor.id}" />
+                            <input type="hidden" name="status" value="CANCELLED" />
+                            <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Cancel</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(appointments)}">
+                <td colspan="4" class="text-center py-4 text-gray-500">No appointments found.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+</body>
+</html>
+
