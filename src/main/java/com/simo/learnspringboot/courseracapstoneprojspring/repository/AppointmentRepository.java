@@ -14,11 +14,6 @@ import java.util.UUID;
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, UUID> {
 
-    /**
-     * Finds the doctor(s) with the most unique patients for a given date range.
-     * This query groups appointments by doctor, counts the distinct patients,
-     * and orders the results to find the doctor with the highest count.
-     */
     @Query("""
         SELECT new com.simo.learnspringboot.courseracapstoneprojspring.dto.DoctorPatientCountDTO(
             a.doctor.id,
@@ -37,4 +32,13 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
     );
 
     List<Appointment> findByDoctorId(UUID doctorId);
+
+    /**
+     * Finds appointments for a specific doctor within a given date and time range.
+     * @param doctorId The ID of the doctor.
+     * @param startDateTime The start of the time range.
+     * @param endDateTime The end of the time range.
+     * @return A list of appointments.
+     */
+    List<Appointment> findByDoctorIdAndAppointmentDateTimeBetween(UUID doctorId, LocalDateTime startDateTime, LocalDateTime endDateTime);
 }
