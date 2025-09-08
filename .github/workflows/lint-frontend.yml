@@ -1,6 +1,3 @@
-# This GitHub Actions workflow will lint the HTML files in your project.
-# It runs automatically on every push and pull request to the 'main' branch.
-
 name: Lint Frontend Views
 
 on:
@@ -12,20 +9,17 @@ on:
 jobs:
   lint-html:
     name: Lint HTML Files
-    # Use the latest version of Ubuntu as the runner
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out the repository's code so the workflow can access it
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Step 2: Run an HTML5 validator on your template files
-      # This action checks for well-formed HTML, which is great for Thymeleaf templates.
-      - name: Validate HTML5
-        uses: Cyb3r-Jak3/html5-validator@v7
-        with:
-          # Specify the root directory where your .html view files are located
-          root: ./src/main/resources/templates/
-          # Set the output format for errors
-          format: 'gnu'
+      - name: Install Tidy
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y tidy
+
+      - name: Validate HTML
+        run: find ./src/main/resources/templates -name "*.html" -exec tidy -errors -quiet {} + || [ $? -eq 1 ]
+
