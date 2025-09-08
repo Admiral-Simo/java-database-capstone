@@ -1,0 +1,30 @@
+# This GitHub Actions workflow will lint your Dockerfile.
+# It uses Hadolint to check for syntax errors and best practice violations.
+# It runs automatically on every push and pull request to the 'main' branch.
+
+name: Lint Dockerfile
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  lint-dockerfile:
+    name: Lint Dockerfile
+    # Use the latest version of Ubuntu as the runner
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository's code so the workflow can access it
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Run Hadolint to lint the Dockerfile
+      # This action will scan your Dockerfile and report any issues.
+      - name: Run Hadolint
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          # Specify the path to your Dockerfile
+          dockerfile: ./Dockerfile
