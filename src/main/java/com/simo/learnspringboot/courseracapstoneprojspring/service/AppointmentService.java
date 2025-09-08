@@ -41,3 +41,4 @@ public class AppointmentService {
         return appointmentRepository.findByDoctorIdAndAppointmentDateTimeBetween(doctorId, startOfDay, endOfDay);
     }
 }
+
