@@ -33,6 +33,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
 
     List<Appointment> findByDoctorId(UUID doctorId);
 
+    List<Appointment> findByPatientId(UUID patientId);
+
     /**
      * Finds appointments for a specific doctor within a given date and time range.
      * @param doctorId The ID of the doctor.

@@ -27,6 +27,10 @@ public class AppointmentService {
         return appointmentRepository.findByDoctorId(doctorId);
     }
 
+    public List<Appointment> findAppointmentsByPatientId(UUID patientId) {
+        return appointmentRepository.findByPatientId(patientId);
+    }
+
     @Transactional
     public void updateAppointmentStatus(UUID appointmentId, AppointmentStatus newStatus) {
         Appointment appointment = appointmentRepository.findById(appointmentId)
