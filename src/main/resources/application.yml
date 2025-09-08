@@ -1,0 +1,8 @@
+# This main configuration file activates the 'dev' profile by default.
+spring:
+  profiles:
+    active: dev
+  # Default MongoDB configuration for local 'dev' profile
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/capstone

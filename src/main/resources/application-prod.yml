@@ -1,0 +1,16 @@
+# PRODUCTION PROFILE (POSTGRESQL + MONGO IN DOCKER)
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+  data:
+    mongodb:
+      # The hostname 'mongo' matches the service name in docker-compose.yml
+      uri: mongodb://mongo:27017/capstone

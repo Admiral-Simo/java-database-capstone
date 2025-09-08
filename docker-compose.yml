@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  # The PostgreSQL Database Service
+  db:
+    image: postgres:15-alpine
+    container_name: capstone-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=simo
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=capstone_db
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  # The MongoDB Service
+  mongo:
+    image: mongo:latest
+    container_name: capstone-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  # Your Spring Boot Application Service
+  app:
+    build: .
+    container_name: capstone-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+      - mongo
+    environment:
+      # This tells Spring Boot to use the 'application-prod.yml' configuration.
+      - SPRING_PROFILES_ACTIVE=prod
+      # These values are injected into the placeholders in application-prod.yml.
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/capstone_db
+      - SPRING_DATASOURCE_USERNAME=simo
+      - SPRING_DATASOURCE_PASSWORD=password
+
+volumes:
+  postgres-data:
+  mongo-data:
