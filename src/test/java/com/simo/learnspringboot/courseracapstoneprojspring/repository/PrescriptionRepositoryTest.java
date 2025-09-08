@@ -54,7 +54,7 @@ public class PrescriptionRepositoryTest {
         doctorRepository.deleteAll();
 
         // Setup test data
-        patient = new Patient("johndoe", "password123", "John", "Doe");
+        patient = new Patient("johndoe", "password123", "John", "Doe", "email@gmail.com", "+1234567890");
         patient.setDateOfBirth(LocalDate.of(2006, 1, 15));
         // ADD THESE TWO LINES
         patient = patientRepository.save(patient);

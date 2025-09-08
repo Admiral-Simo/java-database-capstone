@@ -77,9 +77,9 @@ class AppointmentRepositoryTest {
         drJones = doctorRepository.save(jones);
 
         // Create Patients with usernames that satisfy the validation constraints (min 3 chars)
-        Patient patient1 = patientRepository.save(new Patient("patient1", "pass", "Patient", "One"));
-        Patient patient2 = patientRepository.save(new Patient("patient2", "pass", "Patient", "Two"));
-        Patient patient3 = patientRepository.save(new Patient("patient3", "pass", "Patient", "Three"));
+        Patient patient1 = patientRepository.save(new Patient("patient1", "pass", "Patient", "One", "email@gmail.com", "+1234567891"));
+        Patient patient2 = patientRepository.save(new Patient("patient2", "pass", "Patient", "Two", "email1@gmail.com", "+1234567892"));
+        Patient patient3 = patientRepository.save(new Patient("patient3", "pass", "Patient", "Three", "email2@gmail.com", "+1234567893"));
 
         // Define a target month for appointments that is always in the future to satisfy the @Future constraint.
         LocalDateTime targetMonthStart = YearMonth.from(LocalDateTime.now().plusMonths(1)).atDay(1).atStartOfDay();

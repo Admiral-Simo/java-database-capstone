@@ -43,11 +43,11 @@ public class DataInitializer implements CommandLineRunner {
             doctorRepository.saveAll(List.of(drHouse, drGrey, drStrange));
 
             // Create Patients
-            Patient patient1 = new Patient("jdoe", "pass", "John", "Doe");
+            Patient patient1 = new Patient("jdoe", "pass", "John", "Doe", "email@gmail.com", "+1234567890");
             patient1.setDateOfBirth(LocalDate.of(1985, 5, 20));
-            Patient patient2 = new Patient("jsmith", "pass", "Jane", "Smith");
+            Patient patient2 = new Patient("jsmith", "pass", "Jane", "Smith", "jsmith@gmail.com", "+1987654321");
             patient2.setDateOfBirth(LocalDate.of(1992, 8, 15));
-            Patient patient3 = new Patient("bwilly", "pass", "Bruce", "Willy");
+            Patient patient3 = new Patient("bwilly", "pass", "Bruce", "Willy", "bwilly@gmail.com", "+1122334455");
             patient3.setDateOfBirth(LocalDate.of(1978, 3, 10));
 
             patientRepository.saveAll(List.of(patient1, patient2, patient3));
